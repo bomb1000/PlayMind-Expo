@@ -1,0 +1,12 @@
+run = "cd my-app && npx expo start --tunnel"
+
+modules = ["nodejs-20"]
+[nix]
+channel = "stable-24_05"
+
+[deployment]
+run = ["sh", "-c", "npx expo start"]
+
+[[ports]]
+localPort = 8081
+externalPort = 80
