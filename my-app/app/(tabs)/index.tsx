@@ -58,13 +58,13 @@ export default function EbookLibraryScreen() {
       // Step 1: Get signed URL
       updateBookStatus(book.id, 'uploading');
       const uploadUrl = await apiService.getUploadUrl(book.fileName, 'application/pdf');
-
+      
       // Step 2: Upload file
       await apiService.uploadFile(uploadUrl, book.sourceUri, 'application/pdf');
 
       // Step 3: Trigger the backend processing function
       // In a real app, the backend should return the exact path, but we'll construct it here for the MVP.
-      const gcsPath = `uploads/user-id-placeholder/${book.fileName}`;
+      const gcsPath = `uploads/user-id-placeholder/${book.fileName}`; 
       await apiService.startPdfProcessing(gcsPath);
 
       // Step 4: Update status to 'processing'
@@ -109,7 +109,7 @@ export default function EbookLibraryScreen() {
       Alert.alert('Error', 'Failed to check status.');
     }
   };
-
+  
   const handleDelete = (bookId: string) => {
     setBooks(currentBooks => currentBooks.filter(b => b.id !== bookId));
   };

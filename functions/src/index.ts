@@ -131,7 +131,7 @@ export const processPdf = functions.https.onCall(async (data, context) => {
 
     // In a real app, you would save this operation name to a database
     // to track its status. For the MVP, we just log it.
-
+    
     return null;
   } catch (error) {
     console.error(`Error starting OCR for ${name}:`, error);
@@ -178,7 +178,7 @@ export const getAiConcepts = functions.https.onCall(async (data, context) => {
   }
 
   try {
-    const prompt = `Extract the key concepts from the following text. For each concept, provide a title and a brief explanation. Return the result as a JSON array where each object has "concept" and "explanation" fields. Text:\n\n${text}`;
+    const prompt = `Extract the key concepts from the following text. For each concept, provide a title and a brief explanation. Return the result as a JSON array where each object has \"concept\" and \"explanation\" fields. Text:\n\n${text}`;
     const result = await geminiModel.generateContent(prompt);
     const response = result.response;
     // Basic parsing, assuming Gemini returns a JSON string.

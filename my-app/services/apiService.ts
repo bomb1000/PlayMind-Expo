@@ -49,7 +49,7 @@ export const apiService = {
   uploadFile: async (uploadUrl: string, fileUri: string, contentType:string) => {
     const response = await fetch(fileUri);
     const blob = await response.blob();
-
+    
     const uploadResponse = await fetch(uploadUrl, {
       method: 'PUT',
       headers: { 'Content-Type': contentType },
@@ -102,7 +102,7 @@ export const apiService = {
       return null;
     }
   },
-
+  
   /**
    * Calls the backend to get an AI summary.
    */
