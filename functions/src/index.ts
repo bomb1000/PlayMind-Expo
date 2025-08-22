@@ -1,13 +1,13 @@
 import * as admin from "firebase-admin";
 import * as functions from "firebase-functions";
 import { Storage } from "@google-cloud/storage";
-import { Vision } from "@google-cloud/vision";
+import * as vision from "@google-cloud/vision";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // Initialize Firebase Admin SDK
 admin.initializeApp();
 const storage = new Storage();
-const visionClient = new Vision();
+const visionClient = new vision.ImageAnnotatorClient();
 
 // Initialize Gemini
 // This should be configured in Firebase environment variables
@@ -87,7 +87,7 @@ export const processPdf = functions.storage.object().onFinalize(async (object) =
     console.log(`File is in bucket ${bucket}, but expected ${BUCKET_NAME}. Skipping.`);
     return null;
   }
-
+  
   console.log(`Processing file: ${name}`);
 
   const gcsSourceUri = `gs://${bucket}/${name}`;
@@ -125,7 +125,7 @@ export const processPdf = functions.storage.object().onFinalize(async (object) =
 
     // In a real app, you would save this operation name to a database
     // to track its status. For the MVP, we just log it.
-
+    
     return null;
   } catch (error) {
     console.error(`Error starting OCR for ${name}:`, error);

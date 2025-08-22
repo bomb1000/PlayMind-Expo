@@ -4,6 +4,7 @@
   "private": true,
   "main": "lib/index.js",
   "scripts": {
+    "lint": "eslint --ext .js,.ts .",
     "build": "tsc",
     "serve": "firebase emulators:start --only functions",
     "shell": "firebase functions:shell",
