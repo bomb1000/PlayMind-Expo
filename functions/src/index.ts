@@ -1,13 +1,13 @@
 import * as admin from "firebase-admin";
 import * as functions from "firebase-functions";
 import { Storage } from "@google-cloud/storage";
-import { Vision } from "@google-cloud/vision";
+import vision from "@google-cloud/vision";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // Initialize Firebase Admin SDK
 admin.initializeApp();
 const storage = new Storage();
-const visionClient = new Vision();
+const visionClient = new vision.ImageAnnotatorClient();
 
 // Initialize Gemini
 // This should be configured in Firebase environment variables
@@ -71,24 +71,30 @@ export const generateUploadUrl = functions.https.onCall(async (data, context) =>
 });
 
 /**
- * Processes a PDF file uploaded to GCS by submitting it to the Vision AI for OCR.
+ * Processes a PDF file by submitting it to the Vision AI for OCR.
+ * This is an HTTP callable function, invoked by the client after a successful upload.
  */
-export const processPdf = functions.storage.object().onFinalize(async (object) => {
-  const { bucket, name, contentType } = object;
-
-  // Exit if this is not a PDF file or if it's not in the 'uploads/' folder.
-  if (!contentType || !contentType.startsWith("application/pdf") || !name || !name.startsWith("uploads/")) {
-    console.log(`File ${name} is not a PDF or not in the uploads folder. Skipping.`);
-    return null;
+export const processPdf = functions.https.onCall(async (data, context) => {
+  // Check for authentication
+  if (!context.auth) {
+    throw new functions.https.HttpsError(
+      "unauthenticated",
+      "The function must be called while authenticated."
+    );
   }
 
-  // Check if the bucket is the one we are interested in.
-  if (bucket !== BUCKET_NAME) {
-    console.log(`File is in bucket ${bucket}, but expected ${BUCKET_NAME}. Skipping.`);
-    return null;
+  const { gcsPath } = data;
+  if (!gcsPath) {
+    throw new functions.https.HttpsError(
+      "invalid-argument",
+      "The function must be called with a 'gcsPath' argument."
+    );
   }
 
-  console.log(`Processing file: ${name}`);
+  const bucket = BUCKET_NAME;
+  const name = gcsPath;
+
+  console.log(`Processing file: ${name} in bucket ${bucket}`);
 
   const gcsSourceUri = `gs://${bucket}/${name}`;
   // Extract the original file name and path to create a destination path.

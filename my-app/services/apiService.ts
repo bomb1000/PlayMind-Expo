@@ -24,6 +24,7 @@ const storage = getStorage(app);
 const generateUploadUrl = httpsCallable(functions, 'generateUploadUrl');
 const getAiSummary = httpsCallable(functions, 'getAiSummary');
 const getAiConcepts = httpsCallable(functions, 'getAiConcepts');
+const processPdf = httpsCallable(functions, 'processPdf');
 
 export const apiService = {
   /**
@@ -59,6 +60,19 @@ export const apiService = {
       const errorText = await uploadResponse.text();
       console.error('Upload failed with status:', uploadResponse.status, 'and message:', errorText);
       throw new Error('File upload failed.');
+    }
+  },
+
+  /**
+   * Tells the backend to start processing a newly uploaded PDF.
+   */
+  startPdfProcessing: async (gcsPath: string): Promise<void> => {
+    try {
+      await processPdf({ gcsPath });
+      console.log('Successfully triggered PDF processing for:', gcsPath);
+    } catch (error) {
+      console.error('Error triggering PDF processing:', error);
+      throw new Error('Could not start PDF processing.');
     }
   },
 

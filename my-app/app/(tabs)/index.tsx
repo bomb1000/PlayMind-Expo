@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, FlatList, Button, Alert, ActivityIndicator, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect, useCallback } from 'react';
+import { StyleSheet, View, FlatList, Button, Text, Alert, ActivityIndicator, TouchableOpacity } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
 import { useRouter } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -16,7 +16,7 @@ export default function EbookLibraryScreen() {
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
-  // 初次載入：從本機儲存讀取
+  // Load books from storage on initial render
   useEffect(() => {
     const loadBooks = async () => {
       try {
@@ -33,7 +33,7 @@ export default function EbookLibraryScreen() {
     loadBooks();
   }, []);
 
-  // 每次 books 變動就存回本機
+  // Save books to storage whenever they change
   useEffect(() => {
     const saveBooks = async () => {
       try {
@@ -55,17 +55,20 @@ export default function EbookLibraryScreen() {
 
   const handleUploadProcess = async (book: Book) => {
     try {
-      // 1) 取得簽名上傳 URL
+      // Step 1: Get signed URL
       updateBookStatus(book.id, 'uploading');
       const uploadUrl = await apiService.getUploadUrl(book.fileName, 'application/pdf');
 
-      // 2) 上傳檔案
+      // Step 2: Upload file
       await apiService.uploadFile(uploadUrl, book.sourceUri, 'application/pdf');
 
-      // 3) 進入 processing，後端會自動觸發 parse/處理
-      updateBookStatus(book.id, 'processing', {
-        gcsUploadPath: `uploads/user-id-placeholder/${book.fileName}`,
-      });
+      // Step 3: Trigger the backend processing function
+      // In a real app, the backend should return the exact path, but we'll construct it here for the MVP.
+      const gcsPath = `uploads/user-id-placeholder/${book.fileName}`;
+      await apiService.startPdfProcessing(gcsPath);
+
+      // Step 4: Update status to 'processing'
+      updateBookStatus(book.id, 'processing', { gcsUploadPath: gcsPath });
     } catch (error) {
       console.error('Upload process failed:', error);
       updateBookStatus(book.id, 'failed', { error: (error as Error).message });
@@ -84,7 +87,7 @@ export default function EbookLibraryScreen() {
           status: 'new',
         };
         setBooks(prevBooks => [...prevBooks, newBook]);
-        // 立刻開始上傳流程
+        // Start the upload process immediately
         handleUploadProcess(newBook);
       }
     } catch (error) {
@@ -113,6 +116,7 @@ export default function EbookLibraryScreen() {
 
   const handleOpenBook = (book: Book) => {
     if (book.status === 'ready') {
+      // Pass the book object as a search parameter. Expo Router will handle serialization.
       router.push({ pathname: '/explore', params: { bookJson: JSON.stringify(book) } });
     } else {
       Alert.alert('Book not ready', 'This book is not yet processed.');
@@ -126,9 +130,7 @@ export default function EbookLibraryScreen() {
         <ThemedText style={{ color: getStatusColor(item.status) }}>
           Status: {item.status}
         </ThemedText>
-        {item.status === 'failed' && (
-          <ThemedText style={{ color: 'red' }}>Error: {item.error}</ThemedText>
-        )}
+        {item.status === 'failed' && <ThemedText style={{color: 'red'}}>Error: {item.error}</ThemedText>}
       </View>
       {item.status === 'processing' && (
         <Button title="Refresh" onPress={() => handleRefresh(item)} />
@@ -156,19 +158,19 @@ export default function EbookLibraryScreen() {
 }
 
 const getStatusColor = (status: BookStatus) => {
-  switch (status) {
+  switch(status) {
     case 'ready': return 'green';
     case 'uploading':
     case 'processing': return 'orange';
     case 'failed': return 'red';
     default: return 'gray';
   }
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16, // 保留 mvp 版本的列表頁面布局
+    padding: 16,
   },
   title: {
     textAlign: 'center',
