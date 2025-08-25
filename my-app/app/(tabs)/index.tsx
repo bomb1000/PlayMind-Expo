@@ -58,6 +58,7 @@ export default function EbookLibraryScreen() {
       // Step 1: Get signed URL
       updateBookStatus(book.id, 'uploading');
       const uploadUrl = await apiService.getUploadUrl(book.fileName, 'application/pdf');
+      console.log('Generated Signed URL for curl test:', uploadUrl);
       
       // Step 2: Upload file
       await apiService.uploadFile(uploadUrl, book.sourceUri, 'application/pdf');
