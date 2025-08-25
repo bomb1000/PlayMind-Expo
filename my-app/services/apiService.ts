@@ -1,6 +1,7 @@
 import { initializeApp, getApp, getApps } from 'firebase/app';
 import { getFunctions, httpsCallable } from 'firebase/functions';
 import { getStorage, ref, getDownloadURL } from 'firebase/storage';
+import * as FileSystem from 'expo-file-system';
 import { Book } from '../models/types';
 
 // TODO: Replace with your actual Firebase config from your Firebase project settings
@@ -46,20 +47,19 @@ export const apiService = {
   /**
    * Uploads a file to GCS using the signed URL.
    */
-  uploadFile: async (uploadUrl: string, fileUri: string, contentType:string) => {
-    const response = await fetch(fileUri);
-    const blob = await response.blob();
-    
-    const uploadResponse = await fetch(uploadUrl, {
-      method: 'PUT',
-      headers: { 'Content-Type': contentType },
-      body: blob,
+  uploadFile: async (uploadUrl: string, fileUri: string, contentType: string) => {
+    const uploadResponse = await FileSystem.uploadAsync(uploadUrl, fileUri, {
+      httpMethod: 'PUT',
+      headers: {
+        'Content-Type': contentType,
+      },
+      uploadType: FileSystem.FileSystemUploadType.BINARY_CONTENT,
     });
 
-    if (!uploadResponse.ok) {
-      const errorText = await uploadResponse.text();
-      console.error('Upload failed with status:', uploadResponse.status, 'and message:', errorText);
-      throw new Error('File upload failed.');
+    // Check for non-successful status codes (GCS signed URL uploads return 200 on success)
+    if (uploadResponse.status < 200 || uploadResponse.status >= 300) {
+      console.error('Upload failed with status:', uploadResponse.status, 'and message:', uploadResponse.body);
+      throw new Error(`File upload failed. Server responded with status ${uploadResponse.status}`);
     }
   },
 
