@@ -5,7 +5,9 @@ import vision from "@google-cloud/vision";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 admin.initializeApp();
-const storage = new Storage();
+const storage = new Storage({
+  userProject: process.env.BILLING_PROJECT_ID || process.env.GCLOUD_PROJECT,
+});
 const visionClient = new vision.ImageAnnotatorClient();
 
 const geminiApiKey = process.env.GEMINI_API_KEY;
