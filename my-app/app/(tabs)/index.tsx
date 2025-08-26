@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Book, BookStatus } from '@/models/types';
-import { apiService } from '@/services/apiService';
+import { mockApiService } from '@/services/mockApiService';
 
 const BOOKS_STORAGE_KEY = 'ebook_library';
 
@@ -57,16 +57,16 @@ export default function EbookLibraryScreen() {
     try {
       // Step 1: Get signed URL
       updateBookStatus(book.id, 'uploading');
-      const uploadUrl = await apiService.getUploadUrl(book.fileName, 'application/pdf');
+      const uploadUrl = await mockApiService.getUploadUrl(book.fileName, 'application/pdf');
       console.log('Generated Signed URL for curl test:', uploadUrl);
       
       // Step 2: Upload file
-      await apiService.uploadFile(uploadUrl, book.sourceUri, 'application/pdf');
+      await mockApiService.uploadFile(uploadUrl, book.sourceUri, 'application/pdf');
 
       // Step 3: Trigger the backend processing function
       // In a real app, the backend should return the exact path, but we'll construct it here for the MVP.
       const gcsPath = `uploads/user-id-placeholder/${book.fileName}`; 
-      await apiService.startPdfProcessing(gcsPath);
+      await mockApiService.startPdfProcessing(gcsPath);
 
       // Step 4: Update status to 'processing'
       updateBookStatus(book.id, 'processing', { gcsUploadPath: gcsPath });
@@ -99,7 +99,7 @@ export default function EbookLibraryScreen() {
 
   const handleRefresh = async (book: Book) => {
     try {
-      const processedText = await apiService.getProcessedText(book);
+      const processedText = await mockApiService.getProcessedText(book);
       if (processedText) {
         updateBookStatus(book.id, 'ready', { processedText });
       } else {
