@@ -5,7 +5,7 @@ import { useLocalSearchParams } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Book } from '@/models/types';
-import { apiService } from '@/services/apiService';
+import { mockApiService } from '@/services/mockApiService';
 
 export default function EbookReaderScreen() {
   const params = useLocalSearchParams();
@@ -28,7 +28,7 @@ export default function EbookReaderScreen() {
     if (!book?.processedText) return;
     setIsLoadingAi(true);
     try {
-      const summary = await apiService.getSummary(book.processedText);
+      const summary = await mockApiService.getSummary(book.processedText);
       Alert.alert('Summary', summary);
     } catch (error) {
       Alert.alert('Error', (error as Error).message);
@@ -41,7 +41,7 @@ export default function EbookReaderScreen() {
     if (!book?.processedText) return;
     setIsLoadingAi(true);
     try {
-      const concepts = await apiService.getConcepts(book.processedText);
+      const concepts = await mockApiService.getConcepts(book.processedText);
       const formattedConcepts = concepts.map(c => `• ${c.concept}: ${c.explanation}`).join('\n\n');
       Alert.alert('Key Concepts', formattedConcepts);
     } catch (error) {
