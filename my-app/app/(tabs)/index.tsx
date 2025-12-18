@@ -1,13 +1,18 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { StyleSheet, View, FlatList, Button, Text, Alert, ActivityIndicator, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, FlatList, TouchableOpacity, ActivityIndicator, Alert, Dimensions } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
 import { useRouter } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Ionicons } from '@expo/vector-icons';
+import { BlurView } from 'expo-blur';
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Book, BookStatus } from '@/models/types';
 import { mockApiService } from '@/services/mockApiService';
+import { useColorScheme } from '@/hooks/useColorScheme';
+import { Colors } from '@/constants/Colors';
 
 const BOOKS_STORAGE_KEY = 'ebook_library';
 
@@ -15,8 +20,18 @@ export default function EbookLibraryScreen() {
   const [books, setBooks] = useState<Book[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
+  const colorScheme = useColorScheme() ?? 'light';
+  const themeColors = Colors[colorScheme];
 
-  // Load books from storage on initial render
+  // Get tab bar height to avoid obscuring content
+  let tabBarHeight = 0;
+  try {
+    tabBarHeight = useBottomTabBarHeight();
+  } catch (e) {
+    // Fallback if not in a tab context
+    tabBarHeight = 80;
+  }
+
   useEffect(() => {
     const loadBooks = async () => {
       try {
@@ -33,7 +48,6 @@ export default function EbookLibraryScreen() {
     loadBooks();
   }, []);
 
-  // Save books to storage whenever they change
   useEffect(() => {
     const saveBooks = async () => {
       try {
@@ -55,20 +69,11 @@ export default function EbookLibraryScreen() {
 
   const handleUploadProcess = async (book: Book) => {
     try {
-      // Step 1: Get signed URL
       updateBookStatus(book.id, 'uploading');
       const uploadUrl = await mockApiService.getUploadUrl(book.fileName, 'application/pdf');
-      console.log('Generated Signed URL for curl test:', uploadUrl);
-      
-      // Step 2: Upload file
       await mockApiService.uploadFile(uploadUrl, book.sourceUri, 'application/pdf');
-
-      // Step 3: Trigger the backend processing function
-      // In a real app, the backend should return the exact path, but we'll construct it here for the MVP.
-      const gcsPath = `uploads/user-id-placeholder/${book.fileName}`; 
+      const gcsPath = `uploads/user-id-placeholder/${book.fileName}`;
       await mockApiService.startPdfProcessing(gcsPath);
-
-      // Step 4: Update status to 'processing'
       updateBookStatus(book.id, 'processing', { gcsUploadPath: gcsPath });
     } catch (error) {
       console.error('Upload process failed:', error);
@@ -87,13 +92,11 @@ export default function EbookLibraryScreen() {
           sourceUri: asset.uri,
           status: 'new',
         };
-        setBooks(prevBooks => [...prevBooks, newBook]);
-        // Start the upload process immediately
+        setBooks(prevBooks => [newBook, ...prevBooks]);
         handleUploadProcess(newBook);
       }
     } catch (error) {
       Alert.alert('Error', 'Could not select PDF.');
-      console.error(error);
     }
   };
 
@@ -103,89 +106,223 @@ export default function EbookLibraryScreen() {
       if (processedText) {
         updateBookStatus(book.id, 'ready', { processedText });
       } else {
-        Alert.alert('Info', 'Book is still processing. Please try again in a moment.');
+        Alert.alert('Processing', 'Your book is still being analyzed by AI. Please wait a moment.');
       }
     } catch (error) {
-      console.error('Refresh failed:', error);
       Alert.alert('Error', 'Failed to check status.');
     }
   };
-  
+
   const handleDelete = (bookId: string) => {
-    setBooks(currentBooks => currentBooks.filter(b => b.id !== bookId));
+    Alert.alert(
+      'Delete Book',
+      'Are you sure you want to remove this book from your library?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Delete', style: 'destructive', onPress: () => {
+            setBooks(currentBooks => currentBooks.filter(b => b.id !== bookId));
+          }
+        },
+      ]
+    );
   };
 
   const handleOpenBook = (book: Book) => {
     if (book.status === 'ready') {
-      // Pass the book object as a search parameter. Expo Router will handle serialization.
       router.push({ pathname: '/explore', params: { bookJson: JSON.stringify(book) } });
+    } else if (book.status === 'failed') {
+      Alert.alert('Error', `Upload failed: ${book.error}. Try deleting and re-uploading.`);
     } else {
-      Alert.alert('Book not ready', 'This book is not yet processed.');
+      Alert.alert('Processing', 'This book is not yet ready for reading.');
+    }
+  };
+
+  const getStatusIcon = (status: BookStatus) => {
+    switch (status) {
+      case 'ready': return <Ionicons name="checkmark-circle" size={20} color="#10b981" />;
+      case 'uploading': return <ActivityIndicator size="small" color={themeColors.tint} />;
+      case 'processing': return <ActivityIndicator size="small" color="#f59e0b" />;
+      case 'failed': return <Ionicons name="alert-circle" size={20} color="#ef4444" />;
+      default: return <Ionicons name="time-outline" size={20} color="#94a3b8" />;
     }
   };
 
   const renderItem = ({ item }: { item: Book }) => (
-    <TouchableOpacity onPress={() => handleOpenBook(item)} style={styles.bookItem}>
-      <View style={{ flex: 1 }}>
-        <ThemedText type="defaultSemiBold">{item.fileName}</ThemedText>
-        <ThemedText style={{ color: getStatusColor(item.status) }}>
-          Status: {item.status}
-        </ThemedText>
-        {item.status === 'failed' && <ThemedText style={{color: 'red'}}>Error: {item.error}</ThemedText>}
+    <TouchableOpacity
+      onPress={() => handleOpenBook(item)}
+      style={[styles.card, { backgroundColor: themeColors.card, borderColor: themeColors.border }]}
+      activeOpacity={0.7}
+    >
+      <View style={styles.cardIconContainer}>
+        <Ionicons name="document-text" size={32} color={themeColors.tint} />
       </View>
-      {item.status === 'processing' && (
-        <Button title="Refresh" onPress={() => handleRefresh(item)} />
-      )}
-      <Button title="Delete" color="red" onPress={() => handleDelete(item.id)} />
+      <View style={styles.cardContent}>
+        <ThemedText type="defaultSemiBold" numberOfLines={1} style={styles.fileName}>
+          {item.fileName}
+        </ThemedText>
+        <View style={styles.statusRow}>
+          {getStatusIcon(item.status)}
+          <ThemedText style={styles.statusText}>
+            {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
+          </ThemedText>
+        </View>
+      </View>
+      <View style={styles.cardActions}>
+        {item.status === 'processing' && (
+          <TouchableOpacity onPress={() => handleRefresh(item)} style={styles.iconButton}>
+            <Ionicons name="refresh" size={22} color={themeColors.tint} />
+          </TouchableOpacity>
+        )}
+        <TouchableOpacity onPress={() => handleDelete(item.id)} style={styles.iconButton}>
+          <Ionicons name="trash-outline" size={22} color="#ef4444" />
+        </TouchableOpacity>
+      </View>
     </TouchableOpacity>
   );
 
   if (isLoading) {
-    return <ActivityIndicator size="large" style={{ flex: 1 }} />;
+    return (
+      <ThemedView style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color={themeColors.tint} />
+      </ThemedView>
+    );
   }
 
   return (
     <ThemedView style={styles.container}>
-      <ThemedText type="title" style={styles.title}>My Ebook Library</ThemedText>
-      <Button title="Select PDF to Add" onPress={handleSelectPdf} />
+      <BlurView intensity={80} tint={colorScheme} style={styles.header}>
+        <ThemedText type="title" style={styles.headerTitle}>My Library</ThemedText>
+        <ThemedText style={styles.headerSubtitle}>{books.length} Books</ThemedText>
+      </BlurView>
+
       <FlatList
         data={books}
         renderItem={renderItem}
         keyExtractor={item => item.id}
-        style={styles.list}
+        contentContainerStyle={[styles.listContent, { paddingBottom: tabBarHeight + 20 }]}
+        ListEmptyComponent={
+          <View style={styles.emptyContainer}>
+            <Ionicons name="library-outline" size={80} color={themeColors.icon} style={{ opacity: 0.3 }} />
+            <ThemedText style={styles.emptyText}>Your library is empty</ThemedText>
+            <ThemedText style={styles.emptySubtext}>Add a PDF to start your AI-powered reading journey</ThemedText>
+          </View>
+        }
       />
+
+      <TouchableOpacity
+        style={[styles.fab, { backgroundColor: themeColors.tint, bottom: tabBarHeight + 20 }]}
+        onPress={handleSelectPdf}
+        activeOpacity={0.8}
+      >
+        <Ionicons name="add" size={30} color="#fff" />
+      </TouchableOpacity>
     </ThemedView>
   );
-}
-
-const getStatusColor = (status: BookStatus) => {
-  switch(status) {
-    case 'ready': return 'green';
-    case 'uploading':
-    case 'processing': return 'orange';
-    case 'failed': return 'red';
-    default: return 'gray';
-  }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
   },
-  title: {
-    textAlign: 'center',
-    marginBottom: 16,
-  },
-  list: {
-    marginTop: 16,
-  },
-  bookItem: {
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
+  },
+  header: {
+    paddingTop: 60,
+    paddingBottom: 20,
+    paddingHorizontal: 20,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: 'rgba(0,0,0,0.1)',
+  },
+  headerTitle: {
+    fontSize: 28,
+    fontWeight: '800',
+  },
+  headerSubtitle: {
+    fontSize: 14,
+    opacity: 0.6,
+    marginTop: 4,
+  },
+  listContent: {
+    padding: 16,
+  },
+  card: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 16,
+    borderRadius: 16,
+    marginBottom: 12,
+    borderWidth: 1,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
+  },
+  cardIconContainer: {
+    width: 50,
+    height: 50,
+    borderRadius: 12,
+    backgroundColor: 'rgba(99, 102, 241, 0.1)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 16,
+  },
+  cardContent: {
+    flex: 1,
+  },
+  fileName: {
+    fontSize: 16,
+    marginBottom: 4,
+  },
+  statusRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  statusText: {
+    fontSize: 12,
+    marginLeft: 6,
+    opacity: 0.7,
+  },
+  cardActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  iconButton: {
+    padding: 8,
+    marginLeft: 4,
+  },
+  fab: {
+    position: 'absolute',
+    right: 30,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+    elevation: 8,
+  },
+  emptyContainer: {
+    alignItems: 'center',
+    marginTop: 100,
+    paddingHorizontal: 40,
+  },
+  emptyText: {
+    fontSize: 20,
+    fontWeight: '600',
+    marginTop: 20,
+  },
+  emptySubtext: {
+    fontSize: 14,
+    textAlign: 'center',
+    opacity: 0.5,
+    marginTop: 8,
   },
 });
