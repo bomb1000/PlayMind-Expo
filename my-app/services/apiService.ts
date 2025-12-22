@@ -4,7 +4,6 @@ import { getStorage, ref, getDownloadURL } from 'firebase/storage';
 import * as FileSystem from 'expo-file-system';
 import { Book } from '../models/types';
 
-// TODO: Replace with your actual Firebase config from your Firebase project settings
 const firebaseConfig = {
   apiKey: process.env.EXPO_PUBLIC_API_KEY,
   authDomain: process.env.EXPO_PUBLIC_AUTH_DOMAIN,
@@ -13,6 +12,13 @@ const firebaseConfig = {
   messagingSenderId: process.env.EXPO_PUBLIC_MESSAGING_SENDER_ID,
   appId: process.env.EXPO_PUBLIC_APP_ID
 };
+
+// Ensure critical configuration is present
+if (!firebaseConfig.apiKey || !firebaseConfig.projectId) {
+  console.warn(
+    'Firebase configuration is missing or incomplete. Please check your .env file. See .env.example for details.'
+  );
+}
 
 // Initialize Firebase
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
@@ -48,6 +54,8 @@ export const apiService = {
    * Uploads a file to GCS using the signed URL.
    */
   uploadFile: async (uploadUrl: string, fileUri: string, contentType: string) => {
+    // Note: This uses the legacy API which might be deprecated in newer versions.
+    // If FileSystem.uploadAsync throws, consider using fetch or the new API if available.
     const uploadResponse = await FileSystem.uploadAsync(uploadUrl, fileUri, {
       httpMethod: 'PUT',
       headers: {
