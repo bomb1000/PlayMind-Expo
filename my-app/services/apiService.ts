@@ -1,14 +1,13 @@
 import { initializeApp, getApp, getApps } from 'firebase/app';
 import { getFunctions, httpsCallable } from 'firebase/functions';
-import { getStorage, ref, getDownloadURL } from 'firebase/storage';
-import * as FileSystem from 'expo-file-system';
+import { getStorage, ref, getDownloadURL, uploadBytes, listAll } from 'firebase/storage';
 import { Book } from '../models/types';
 
 const firebaseConfig = {
   apiKey: process.env.EXPO_PUBLIC_API_KEY,
   authDomain: process.env.EXPO_PUBLIC_AUTH_DOMAIN,
   projectId: process.env.EXPO_PUBLIC_PROJECT_ID,
-  storageBucket: process.env.EXPO_PUBLIC_STORAGE_BUCKET,
+  storageBucket: 'playmind-ai-reader.firebasestorage.app',
   messagingSenderId: process.env.EXPO_PUBLIC_MESSAGING_SENDER_ID,
   appId: process.env.EXPO_PUBLIC_APP_ID
 };
@@ -36,12 +35,10 @@ const processPdf = httpsCallable(functions, 'processPdf');
 export const apiService = {
   /**
    * Gets a signed URL for uploading a file.
+   * @deprecated logic moved to client-side upload
    */
   getUploadUrl: async (fileName: string, contentType: string): Promise<string> => {
     try {
-      // Auth is required by the backend function, but for this MVP prototype,
-      // we assume the user is implicitly authenticated or rules are open.
-      // In a real app, you would handle user login with Firebase Auth.
       const result = await generateUploadUrl({ fileName, contentType });
       return (result.data as { url: string }).url;
     } catch (error) {
@@ -51,23 +48,34 @@ export const apiService = {
   },
 
   /**
-   * Uploads a file to GCS using the signed URL.
+   * Uploads a file directly to Firebase Storage using the Client SDK.
+   * This bypasses the need for Signed URLs and backend service account permissions.
    */
-  uploadFile: async (uploadUrl: string, fileUri: string, contentType: string) => {
-    // Note: This uses the legacy API which might be deprecated in newer versions.
-    // If FileSystem.uploadAsync throws, consider using fetch or the new API if available.
-    const uploadResponse = await FileSystem.uploadAsync(uploadUrl, fileUri, {
-      httpMethod: 'PUT',
-      headers: {
-        'Content-Type': contentType,
-      },
-      uploadType: FileSystem.FileSystemUploadType.BINARY_CONTENT,
-    });
+  uploadFile: async (fileName: string, fileUri: string, contentType: string, userId: string = 'user-id-placeholder') => {
+    try {
+      console.log('Starting direct upload for:', fileName);
 
-    // Check for non-successful status codes (GCS signed URL uploads return 200 on success)
-    if (uploadResponse.status < 200 || uploadResponse.status >= 300) {
-      console.error('Upload failed with status:', uploadResponse.status, 'and message:', uploadResponse.body);
-      throw new Error(`File upload failed. Server responded with status ${uploadResponse.status}`);
+      // Step 1: Convert file URI to Blob
+      const fileResponse = await fetch(fileUri);
+      const blob = await fileResponse.blob();
+
+      // Sanitize filename to avoid path issues with special characters (e.g. spaces, colons)
+      const sanitizedFileName = fileName.replace(/[^a-zA-Z0-9.-]/g, '_');
+      console.log('Sanitized filename:', sanitizedFileName);
+
+      // Step 2: Create Storage Reference
+      const filePath = `uploads/${userId}/${sanitizedFileName}`;
+      // uploadBytes imported at top level
+      const storageRef = ref(storage, filePath);
+
+      // Step 3: Upload via Client SDK
+      await uploadBytes(storageRef, blob, { contentType });
+
+      console.log('Direct upload successful!');
+      return filePath;
+    } catch (error) {
+      console.error('Error during direct file upload:', error);
+      throw error;
     }
   },
 
@@ -78,9 +86,9 @@ export const apiService = {
     try {
       await processPdf({ gcsPath });
       console.log('Successfully triggered PDF processing for:', gcsPath);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error triggering PDF processing:', error);
-      throw new Error('Could not start PDF processing.');
+      throw new Error(`Could not start PDF processing: ${error.message}`);
     }
   },
 
@@ -90,27 +98,44 @@ export const apiService = {
   getProcessedText: async (book: Book): Promise<string | null> => {
     if (!book.gcsUploadPath) return null;
 
-    // This path is based on the backend logic in `processPdf`. It might need adjustment.
+    // This path is based on the backend logic in `processPdf`.
     const outputPrefix = book.gcsUploadPath.replace('uploads/', 'processed/').replace('.pdf', '');
-    const processedPath = `${outputPrefix}_ocr_output/output-1-to-100.json`;
+    const outputDir = `${outputPrefix}_ocr_output/`;
 
     try {
-      const url = await getDownloadURL(ref(storage, processedPath));
+      // List files in the output directory
+      console.log(`[DEBUG] Checking for files in: ${outputDir}`);
+      const folderRef = ref(storage, outputDir);
+      const listResult = await listAll(folderRef);
+      console.log(`[DEBUG] Found ${listResult.items.length} files.`);
+      listResult.items.forEach(i => console.log(`[DEBUG] File: ${i.name}`));
+
+      if (listResult.items.length === 0) {
+        return null; // No files yet, processing likely still in progress
+      }
+
+      // Find the first JSON output file
+      const jsonFile = listResult.items.find(item => item.name.endsWith('.json'));
+
+      if (!jsonFile) {
+        return null; // Folder exists but no JSON file yet?
+      }
+
+      const url = await getDownloadURL(jsonFile);
       const response = await fetch(url);
       if (!response.ok) return null; // Not ready yet
 
       const data = await response.json();
       // The Vision AI JSON output is complex. We parse it to get the full text.
-      return data.responses.map((res: any) => res.fullTextAnnotation?.text || '').join('\\n\\n');
+      return data.responses.map((res: any) => res.fullTextAnnotation?.text || '').join('\n\n');
     } catch (error: any) {
-      // It's common for this to fail if the file isn't ready (e.g., 404 Not Found).
-      if (error.code !== 'storage/object-not-found') {
-          console.error("Error fetching processed text:", error);
-      }
+      // If the folder doesn't exist yet, listAll might throw or return empty.
+      // storage/object-not-found is common for getDownloadURL, strictly speaking listAll throws 'storage/object-not-found' if the *parent* bucket is missing, but here the path is virtual so it usually just returns empty.
+      console.warn("Checking processed text status...", error.code || error.message);
       return null;
     }
   },
-  
+
   /**
    * Calls the backend to get an AI summary.
    */

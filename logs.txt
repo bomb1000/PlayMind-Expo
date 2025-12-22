@@ -1,0 +1,100 @@
+2025-12-22T08:49:30.512520Z ? processPdf:     at /workspace/node_modules/google-gax/build/src/normalCalls/timeout.js:44:16
+2025-12-22T08:49:30.512524Z ? processPdf:     at repeat (/workspace/node_modules/google-gax/build/src/normalCalls/retries.js:82:25)
+2025-12-22T08:49:30.512528Z ? processPdf:     at /workspace/node_modules/google-gax/build/src/normalCalls/retries.js:125:13
+2025-12-22T08:49:30.512532Z ? processPdf:     at LongrunningApiCaller._wrapOperation (/workspace/node_modules/google-gax/build/src/longRunningCalls/longRunningApiCaller.js:55:16)
+2025-12-22T08:49:30.512536Z ? processPdf:     at /workspace/node_modules/google-gax/build/src/longRunningCalls/longRunningApiCaller.js:46:25
+2025-12-22T08:49:30.512541Z ? processPdf:     at OngoingCallPromise.call (/workspace/node_modules/google-gax/build/src/call.js:67:27)
+2025-12-22T08:49:30.512546Z ? processPdf:     at LongrunningApiCaller.call (/workspace/node_modules/google-gax/build/src/longRunningCalls/longRunningApiCaller.js:45:19) {
+2025-12-22T08:49:30.512550Z ? processPdf:   code: 7,
+2025-12-22T08:49:30.512558Z ? processPdf:   details: 'Error opening file: gs://your-default-bucket-name/uploads/user-id-placeholder/_External__Request_for_401k_pension_distribution.pdf.',
+2025-12-22T08:49:30.512563Z ? processPdf:   metadata: Metadata { internalRepr: Map(0) {}, options: {} },
+2025-12-22T08:49:30.512570Z ? processPdf:   note: 'Exception occurred in retry method that was not classified as transient'
+2025-12-22T08:49:30.512574Z ? processPdf: }
+2025-12-22T08:49:30.515699236Z D processPdf: Function execution took 883 ms, finished with status code: 200
+2025-12-22T08:51:51.059337893Z D processPdf: Function execution started
+2025-12-22T08:51:51.064451Z D processPdf: {"verifications":{"auth":"MISSING","app":"MISSING"},"message":"Callable request verification passed"}
+2025-12-22T08:51:51.064503Z ? processPdf: Processing file: uploads/user-id-placeholder/_External__Request_for_401k_pension_distribution.pdf in bucket your-default-bucket-name
+2025-12-22T08:51:51.131495Z ? processPdf: Error starting OCR for uploads/user-id-placeholder/_External__Request_for_401k_pension_distribution.pdf: Error: 7 PERMISSION_DENIED: Error opening file: gs://your-default-bucket-name/uploads/user-id-placeholder/_External__Request_for_401k_pension_distribution.pdf.
+2025-12-22T08:51:51.131528Z ? processPdf:     at callErrorFromStatus (/workspace/node_modules/@grpc/grpc-js/build/src/call.js:32:19)
+2025-12-22T08:51:51.131534Z ? processPdf:     at Object.onReceiveStatus (/workspace/node_modules/@grpc/grpc-js/build/src/client.js:193:76)
+2025-12-22T08:51:51.131537Z ? processPdf:     at Object.onReceiveStatus (/workspace/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)
+2025-12-22T08:51:51.131540Z ? processPdf:     at Object.onReceiveStatus (/workspace/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)
+2025-12-22T08:51:51.131543Z ? processPdf:     at /workspace/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78
+2025-12-22T08:51:51.131548Z ? processPdf:     at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-12-22T08:51:51.131552Z ? processPdf: for call at
+2025-12-22T08:51:51.131556Z ? processPdf:     at ServiceClientImpl.makeUnaryRequest (/workspace/node_modules/@grpc/grpc-js/build/src/client.js:161:32)
+2025-12-22T08:51:51.131559Z ? processPdf:     at ServiceClientImpl.<anonymous> (/workspace/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)
+2025-12-22T08:51:51.131566Z ? processPdf:     at /workspace/node_modules/@google-cloud/vision/build/src/v1/image_annotator_client.js:235:29
+2025-12-22T08:51:51.131570Z ? processPdf:     at /workspace/node_modules/google-gax/build/src/normalCalls/timeout.js:44:16
+2025-12-22T08:51:51.131575Z ? processPdf:     at repeat (/workspace/node_modules/google-gax/build/src/normalCalls/retries.js:82:25)
+2025-12-22T08:51:51.131579Z ? processPdf:     at /workspace/node_modules/google-gax/build/src/normalCalls/retries.js:125:13
+2025-12-22T08:51:51.131582Z ? processPdf:     at LongrunningApiCaller._wrapOperation (/workspace/node_modules/google-gax/build/src/longRunningCalls/longRunningApiCaller.js:55:16)
+2025-12-22T08:51:51.131586Z ? processPdf:     at /workspace/node_modules/google-gax/build/src/longRunningCalls/longRunningApiCaller.js:46:25
+2025-12-22T08:51:51.131589Z ? processPdf:     at OngoingCallPromise.call (/workspace/node_modules/google-gax/build/src/call.js:67:27)
+2025-12-22T08:51:51.131592Z ? processPdf:     at LongrunningApiCaller.call (/workspace/node_modules/google-gax/build/src/longRunningCalls/longRunningApiCaller.js:45:19) {
+2025-12-22T08:51:51.131594Z ? processPdf:   code: 7,
+2025-12-22T08:51:51.131602Z ? processPdf:   details: 'Error opening file: gs://your-default-bucket-name/uploads/user-id-placeholder/_External__Request_for_401k_pension_distribution.pdf.',
+2025-12-22T08:51:51.131606Z ? processPdf:   metadata: Metadata { internalRepr: Map(0) {}, options: {} },
+2025-12-22T08:51:51.131612Z ? processPdf:   note: 'Exception occurred in retry method that was not classified as transient'
+2025-12-22T08:51:51.131615Z ? processPdf: }
+2025-12-22T08:51:51.132944605Z D processPdf: Function execution took 73 ms, finished with status code: 200
+2025-12-22T08:54:49.010075Z N processPdf: {"@type":"type.googleapis.com/google.cloud.audit.AuditLog","authenticationInfo":{"principalEmail":"michael491549154915@gmail.com","principalSubject":"user:michael491549154915@gmail.com","oauthInfo":{"oauthClientId":"563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com"}},"requestMetadata":{"callerIp":"223.137.111.89","callerSuppliedUserAgent":"FirebaseCLI/15.1.0,gzip(gfe),gzip(gfe)","requestAttributes":{"time":"2025-12-22T08:54:50.399506Z","auth":{}},"destinationAttributes":{}},"serviceName":"cloudfunctions.googleapis.com","methodName":"google.cloud.functions.v1.CloudFunctionsService.UpdateFunction","authorizationInfo":[{"resource":"projects/playmind-ai-reader/locations/us-central1/functions/processPdf","permission":"cloudfunctions.functions.update","granted":true,"resourceAttributes":{},"permissionType":"ADMIN_WRITE"}],"resourceName":"projects/playmind-ai-reader/locations/us-central1/functions/processPdf","request":{"function":{"name":"projects/playmind-ai-reader/locations/us-central1/functions/processPdf","sourceUploadUrl":"https://storage.googleapis.com/uploads-683082005119.us-central1.cloudfunctions.appspot.com/a0541f3d-db18-45e4-9b59-91e84a422a90.zip?GoogleAccessId=service-590177001373@gcf-admin-robot.iam.gserviceaccount.com&Expires=1766395444&Signature=Ms2jI48Ptoa3%2BWUxiHA3yKHyB2yv3ZfEAIVkriYHexFpAZHQXeqdEXMoRS1y8263G%2BBILFUfReUKiMjsBK9kM7Oks3%2FyTDjpw5jFDWxER9C7i0vEfZsoHtcZKKH%2FUgeafb5UYFpKP7V6Jp5lZ7kbl8CloVGM96AJjgZG7OMhvEG7fhJxuvETxBtnsTd5c7cqQBS3sHu77L1oaxs4zgc3PxzeIdfEXGlamJdoccW%2Fev8EMZdOUG7fRKMd154dlR47t8qTG65ILr7Mr2%2FPFzNInrIH2P6GqyZhPaPHZUBDYXiV6c9%2FEAiDGePEnse7yjWa1Dd%2BRH1qrgs006j2ckb1Jg%3D%3D","runtime":"nodejs22","entryPoint":"processPdf","httpsTrigger":{"securityLevel":"SECURE_ALWAYS"},"dockerRegistry":"ARTIFACT_REGISTRY","labels":{"deployment-callable":"true","deployment-tool":"cli-firebase","firebase-functions-hash":"d20cb374a34f088b8990de47723aa0c4dd435133"},"sourceToken":"abad5200-acb3-4c67-a9ed-5634e5e443a9"},"@type":"type.googleapis.com/google.cloud.functions.v1.UpdateFunctionRequest","updateMask":"name,sourceUploadUrl,entryPoint,runtime,dockerRegistry,labels,httpsTrigger.securityLevel,minInstances,maxInstances,ingressSettings,environmentVariables,serviceAccountEmail,availableMemoryMb,timeout,vpcConnector,vpcConnectorEgressSettings,sourceToken,buildEnvironmentVariables"},"resourceLocation":{"currentLocations":["us-central1"]}}
+2025-12-22T08:55:05.663611Z ? processPdf: GEMINI_API_KEY environment variable not set.
+2025-12-22T08:55:19.349143Z N processPdf: {"@type":"type.googleapis.com/google.cloud.audit.AuditLog","status":{},"authenticationInfo":{},"serviceName":"cloudfunctions.googleapis.com","methodName":"google.cloud.functions.v1.CloudFunctionsService.UpdateFunction","resourceName":"projects/playmind-ai-reader/locations/us-central1/functions/processPdf"}
+2025-12-22T08:56:58.045969701Z D processPdf: Function execution started
+2025-12-22T08:56:58.226694Z D processPdf: {"message":"Callable request verification passed","verifications":{"auth":"MISSING","app":"MISSING"}}
+2025-12-22T08:56:58.227557Z ? processPdf: Processing file: uploads/user-id-placeholder/_External__Request_for_401k_pension_distribution.pdf in bucket your-default-bucket-name
+2025-12-22T08:56:59.111208Z ? processPdf: Error starting OCR for uploads/user-id-placeholder/_External__Request_for_401k_pension_distribution.pdf: Error: 7 PERMISSION_DENIED: Error opening file: gs://your-default-bucket-name/uploads/user-id-placeholder/_External__Request_for_401k_pension_distribution.pdf.
+2025-12-22T08:56:59.111233Z ? processPdf:     at callErrorFromStatus (/workspace/node_modules/@grpc/grpc-js/build/src/call.js:32:19)
+2025-12-22T08:56:59.111240Z ? processPdf:     at Object.onReceiveStatus (/workspace/node_modules/@grpc/grpc-js/build/src/client.js:193:76)
+2025-12-22T08:56:59.111246Z ? processPdf:     at Object.onReceiveStatus (/workspace/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)
+2025-12-22T08:56:59.111251Z ? processPdf:     at Object.onReceiveStatus (/workspace/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)
+2025-12-22T08:56:59.111256Z ? processPdf:     at /workspace/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78
+2025-12-22T08:56:59.111262Z ? processPdf:     at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-12-22T08:56:59.111266Z ? processPdf: for call at
+2025-12-22T08:56:59.111272Z ? processPdf:     at ServiceClientImpl.makeUnaryRequest (/workspace/node_modules/@grpc/grpc-js/build/src/client.js:161:32)
+2025-12-22T08:56:59.111277Z ? processPdf:     at ServiceClientImpl.<anonymous> (/workspace/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)
+2025-12-22T08:56:59.111282Z ? processPdf:     at /workspace/node_modules/@google-cloud/vision/build/src/v1/image_annotator_client.js:235:29
+2025-12-22T08:56:59.111288Z ? processPdf:     at /workspace/node_modules/google-gax/build/src/normalCalls/timeout.js:44:16
+2025-12-22T08:56:59.111295Z ? processPdf:     at repeat (/workspace/node_modules/google-gax/build/src/normalCalls/retries.js:82:25)
+2025-12-22T08:56:59.111301Z ? processPdf:     at /workspace/node_modules/google-gax/build/src/normalCalls/retries.js:125:13
+2025-12-22T08:56:59.111306Z ? processPdf:     at LongrunningApiCaller._wrapOperation (/workspace/node_modules/google-gax/build/src/longRunningCalls/longRunningApiCaller.js:55:16)
+2025-12-22T08:56:59.111312Z ? processPdf:     at /workspace/node_modules/google-gax/build/src/longRunningCalls/longRunningApiCaller.js:46:25
+2025-12-22T08:56:59.111318Z ? processPdf:     at OngoingCallPromise.call (/workspace/node_modules/google-gax/build/src/call.js:67:27)
+2025-12-22T08:56:59.111351Z ? processPdf:     at LongrunningApiCaller.call (/workspace/node_modules/google-gax/build/src/longRunningCalls/longRunningApiCaller.js:45:19) {
+2025-12-22T08:56:59.111357Z ? processPdf:   code: 7,
+2025-12-22T08:56:59.111368Z ? processPdf:   details: 'Error opening file: gs://your-default-bucket-name/uploads/user-id-placeholder/_External__Request_for_401k_pension_distribution.pdf.',
+2025-12-22T08:56:59.111372Z ? processPdf:   metadata: Metadata { internalRepr: Map(0) {}, options: {} },
+2025-12-22T08:56:59.111382Z ? processPdf:   note: 'Exception occurred in retry method that was not classified as transient'
+2025-12-22T08:56:59.111387Z ? processPdf: }
+2025-12-22T08:56:59.124266781Z D processPdf: Function execution took 1078 ms, finished with status code: 200
+2025-12-22T09:10:44.209916Z N processPdf: {"@type":"type.googleapis.com/google.cloud.audit.AuditLog","authenticationInfo":{"principalEmail":"michael491549154915@gmail.com","principalSubject":"user:michael491549154915@gmail.com","oauthInfo":{"oauthClientId":"563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com"}},"requestMetadata":{"callerIp":"223.137.111.89","callerSuppliedUserAgent":"FirebaseCLI/15.1.0,gzip(gfe),gzip(gfe)","requestAttributes":{"time":"2025-12-22T09:10:45.613437Z","auth":{}},"destinationAttributes":{}},"serviceName":"cloudfunctions.googleapis.com","methodName":"google.cloud.functions.v1.CloudFunctionsService.UpdateFunction","authorizationInfo":[{"resource":"projects/playmind-ai-reader/locations/us-central1/functions/processPdf","permission":"cloudfunctions.functions.update","granted":true,"resourceAttributes":{},"permissionType":"ADMIN_WRITE"}],"resourceName":"projects/playmind-ai-reader/locations/us-central1/functions/processPdf","request":{"@type":"type.googleapis.com/google.cloud.functions.v1.UpdateFunctionRequest","function":{"dockerRegistry":"ARTIFACT_REGISTRY","sourceUploadUrl":"https://storage.googleapis.com/uploads-683082005119.us-central1.cloudfunctions.appspot.com/79f88a74-04dc-49f0-a1ad-9d5a99325f0f.zip?GoogleAccessId=service-590177001373@gcf-admin-robot.iam.gserviceaccount.com&Expires=1766396391&Signature=tVqvhT7x8q3U6nP9Xku3%2F2k1FT0T3c5ydtEYpJMIHk5g6LIkvxdrKFDNjEcvf9dsEk%2BM6Ql4R2XTM3EE40uVx8JWxjraZMZcRW%2BZo7w6ziOwGbjOcsWHt2mbysqwZtWJG%2BEueFGT2XYV%2B5V8bfUPYTHGE4kCKLDQAFYXGFeKtFNVM5jvBwbppdZcz5jDE%2BucJYR9ZW14WgsKDaxraMWtdmfQbc4noW3Hk%2B%2Bk2HSiGa%2BI0A2kDcZFi6ngKhHS9EL6qpnq4R%2FwM7ksFyX%2Fyfsin1Um6O37h1pik4cMcF%2BGpa4aML1BcwQ52tSFjwJ2qQ0SNsMOiii246pY%2Bmu%2BHsVE8A%3D%3D","httpsTrigger":{"securityLevel":"SECURE_ALWAYS"},"runtime":"nodejs22","name":"projects/playmind-ai-reader/locations/us-central1/functions/processPdf","sourceToken":"a662c232-aa8d-4d1d-96c8-64c87f37f289","entryPoint":"processPdf","labels":{"firebase-functions-hash":"147db01c01479e3c5490f79e318352eecf357c3d","deployment-callable":"true","deployment-tool":"cli-firebase"}},"updateMask":"name,sourceUploadUrl,entryPoint,runtime,dockerRegistry,labels,httpsTrigger.securityLevel,minInstances,maxInstances,ingressSettings,environmentVariables,serviceAccountEmail,availableMemoryMb,timeout,vpcConnector,vpcConnectorEgressSettings,sourceToken,buildEnvironmentVariables"},"resourceLocation":{"currentLocations":["us-central1"]}}
+2025-12-22T09:11:00.093078Z ? processPdf: GEMINI_API_KEY environment variable not set.
+2025-12-22T09:11:06.864142Z N processPdf: {"@type":"type.googleapis.com/google.cloud.audit.AuditLog","status":{},"authenticationInfo":{},"serviceName":"cloudfunctions.googleapis.com","methodName":"google.cloud.functions.v1.CloudFunctionsService.UpdateFunction","resourceName":"projects/playmind-ai-reader/locations/us-central1/functions/processPdf"}
+2025-12-22T09:12:15.223411097Z D processPdf: Function execution started
+2025-12-22T09:12:15.384203Z D processPdf: {"message":"Callable request verification passed","verifications":{"auth":"MISSING","app":"MISSING"}}
+2025-12-22T09:12:15.384789Z ? processPdf: Processing file: uploads/user-id-placeholder/_External__Request_for_401k_pension_distribution.pdf in bucket your-default-bucket-name
+2025-12-22T09:12:15.992015Z ? processPdf: Error starting OCR for uploads/user-id-placeholder/_External__Request_for_401k_pension_distribution.pdf: Error: 7 PERMISSION_DENIED: Error opening file: gs://your-default-bucket-name/uploads/user-id-placeholder/_External__Request_for_401k_pension_distribution.pdf.
+2025-12-22T09:12:15.992024Z ? processPdf:     at callErrorFromStatus (/workspace/node_modules/@grpc/grpc-js/build/src/call.js:32:19)
+2025-12-22T09:12:15.992027Z ? processPdf:     at Object.onReceiveStatus (/workspace/node_modules/@grpc/grpc-js/build/src/client.js:193:76)
+2025-12-22T09:12:15.992029Z ? processPdf:     at Object.onReceiveStatus (/workspace/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:361:141)
+2025-12-22T09:12:15.992031Z ? processPdf:     at Object.onReceiveStatus (/workspace/node_modules/@grpc/grpc-js/build/src/client-interceptors.js:324:181)
+2025-12-22T09:12:15.992033Z ? processPdf:     at /workspace/node_modules/@grpc/grpc-js/build/src/resolving-call.js:135:78
+2025-12-22T09:12:15.992035Z ? processPdf:     at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+2025-12-22T09:12:15.992037Z ? processPdf: for call at
+2025-12-22T09:12:15.992039Z ? processPdf:     at ServiceClientImpl.makeUnaryRequest (/workspace/node_modules/@grpc/grpc-js/build/src/client.js:161:32)
+2025-12-22T09:12:15.992041Z ? processPdf:     at ServiceClientImpl.<anonymous> (/workspace/node_modules/@grpc/grpc-js/build/src/make-client.js:105:19)
+2025-12-22T09:12:15.992043Z ? processPdf:     at /workspace/node_modules/@google-cloud/vision/build/src/v1/image_annotator_client.js:235:29
+2025-12-22T09:12:15.992046Z ? processPdf:     at /workspace/node_modules/google-gax/build/src/normalCalls/timeout.js:44:16
+2025-12-22T09:12:15.992047Z ? processPdf:     at repeat (/workspace/node_modules/google-gax/build/src/normalCalls/retries.js:82:25)
+2025-12-22T09:12:15.992049Z ? processPdf:     at /workspace/node_modules/google-gax/build/src/normalCalls/retries.js:125:13
+2025-12-22T09:12:15.992051Z ? processPdf:     at LongrunningApiCaller._wrapOperation (/workspace/node_modules/google-gax/build/src/longRunningCalls/longRunningApiCaller.js:55:16)
+2025-12-22T09:12:15.992054Z ? processPdf:     at /workspace/node_modules/google-gax/build/src/longRunningCalls/longRunningApiCaller.js:46:25
+2025-12-22T09:12:15.992056Z ? processPdf:     at OngoingCallPromise.call (/workspace/node_modules/google-gax/build/src/call.js:67:27)
+2025-12-22T09:12:15.992058Z ? processPdf:     at LongrunningApiCaller.call (/workspace/node_modules/google-gax/build/src/longRunningCalls/longRunningApiCaller.js:45:19) {
+2025-12-22T09:12:15.992061Z ? processPdf:   code: 7,
+2025-12-22T09:12:15.992065Z ? processPdf:   details: 'Error opening file: gs://your-default-bucket-name/uploads/user-id-placeholder/_External__Request_for_401k_pension_distribution.pdf.',
+2025-12-22T09:12:15.992067Z ? processPdf:   metadata: Metadata { internalRepr: Map(0) {}, options: {} },
+2025-12-22T09:12:15.992071Z ? processPdf:   note: 'Exception occurred in retry method that was not classified as transient'
+2025-12-22T09:12:15.992074Z ? processPdf: }
+2025-12-22T09:12:15.994824228Z D processPdf: Function execution took 771 ms, finished with status code: 200

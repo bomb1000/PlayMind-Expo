@@ -20,25 +20,22 @@ PlayMind-Expo 是一款基於 AI 的智慧 PDF 閱讀助手，旨在為使用者
 *   **後端**：Firebase Functions (Node.js)
 *   **AI 引擎**：Google Generative AI (Gemini Pro) & Google Cloud Vision
 
-## 🚀 快速開始
+## 📈 專案現況與進展
+*   ✅ **PDF 處理自動化**：已成功實作 PDF 上傳後自動觸發 Google Cloud Vision API 進行 OCR 辨識。
+*   ✅ **儲存架構優化**：採用 Firebase Client SDK 直傳模式，解決了原本後端簽署 URL 的權限與計費障礙。
+*   ✅ **檔名處理**：內建檔名過濾機制，自動處理特殊字元以確保雲端存儲路徑穩定。
+*   🔄 **AI 功能調整中**：目前正在優化 Gemini 1.5 Flash 的整合，以提供更高品質的摘要與概念分析。
 
-### 1. 安裝依賴
-```bash
-cd my-app
-npm install
-```
+## 📱 啟動說明
 
-### 2. 啟動開發伺服器
-```bash
-npx expo start
-```
-使用手機掃描 QR Code 即可在 Expo Go 中體驗。
+### 前端應用 (my-app)
+1. 安裝依賴：`npm install`
+2. 啟動：`npx expo start`
 
-## 🛠️ 開發架構
-*   `my-app/`：前端 Expo 應用程式。
-*   `functions/`：後端 Firebase Functions，處理 OCR 與 AI 邏輯。
-*   `my-app/services/mockApiService.ts`：提供模擬數據，方便在無後端環境下進行 UI 開發與測試。
+### 後端函數 (functions)
+1. 安裝依賴：`cd functions && npm install`
+2. 編譯：`npm run build`
+3. 部署：`firebase deploy --only functions`
 
 ---
-
 由 **PlayMind Team** 傾力打造，致力於重新定義 AI 時代的閱讀方式。

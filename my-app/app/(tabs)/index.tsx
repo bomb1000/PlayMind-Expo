@@ -10,7 +10,7 @@ import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Book, BookStatus } from '@/models/types';
-import { mockApiService } from '@/services/mockApiService';
+import { apiProvider } from '@/services/apiProvider';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { Colors } from '@/constants/Colors';
 
@@ -61,6 +61,31 @@ export default function EbookLibraryScreen() {
     }
   }, [books, isLoading]);
 
+  useEffect(() => {
+    // Poll for status updates for any book that is 'processing' or 'uploading'
+    const interval = setInterval(() => {
+      books.forEach(async (book) => {
+        if (book.status === 'processing') {
+          // Check if processing is done
+          try {
+            // Since handleRefresh logic is not directly reusable without modification or extraction,
+            // we call the service directly here.
+            const service = await apiProvider.getService();
+            const processedText = await service.getProcessedText(book);
+            if (processedText) {
+              updateBookStatus(book.id, 'ready', { processedText });
+            }
+          } catch (e) {
+            // silent fail on polling
+          }
+        }
+      });
+    }, 5000); // Check every 5 seconds
+
+    return () => clearInterval(interval);
+  }, [books]);
+
+
   const updateBookStatus = (bookId: string, status: BookStatus, updates: Partial<Book> = {}) => {
     setBooks(currentBooks =>
       currentBooks.map(b => (b.id === bookId ? { ...b, status, ...updates } : b))
@@ -70,10 +95,13 @@ export default function EbookLibraryScreen() {
   const handleUploadProcess = async (book: Book) => {
     try {
       updateBookStatus(book.id, 'uploading');
-      const uploadUrl = await mockApiService.getUploadUrl(book.fileName, 'application/pdf');
-      await mockApiService.uploadFile(uploadUrl, book.sourceUri, 'application/pdf');
-      const gcsPath = `uploads/user-id-placeholder/${book.fileName}`;
-      await mockApiService.startPdfProcessing(gcsPath);
+      const service = await apiProvider.getService();
+      // Use new client-side upload which bypasses backend billing check
+      // const uploadUrl = await service.getUploadUrl(book.fileName, 'application/pdf');
+      const gcsPath = await service.uploadFile(book.fileName, book.sourceUri, 'application/pdf');
+
+      // const gcsPath = `uploads/user-id-placeholder/${book.fileName}`;
+      await service.startPdfProcessing(gcsPath);
       updateBookStatus(book.id, 'processing', { gcsUploadPath: gcsPath });
     } catch (error) {
       console.error('Upload process failed:', error);
@@ -102,7 +130,8 @@ export default function EbookLibraryScreen() {
 
   const handleRefresh = async (book: Book) => {
     try {
-      const processedText = await mockApiService.getProcessedText(book);
+      const service = await apiProvider.getService();
+      const processedText = await service.getProcessedText(book);
       if (processedText) {
         updateBookStatus(book.id, 'ready', { processedText });
       } else {

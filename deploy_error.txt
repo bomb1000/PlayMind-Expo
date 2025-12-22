@@ -1,0 +1,195 @@
+[2025-12-22T09:36:57.457Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[2025-12-22T09:36:57.458Z] > authorizing via signed-in user (michael491549154915@gmail.com)
+[2025-12-22T09:36:57.459Z] [iam] checking project playmind-ai-reader for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[2025-12-22T09:36:57.460Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:36:57.460Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:36:57.461Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/playmind-ai-reader:testIamPermissions [none]
+[2025-12-22T09:36:57.461Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/playmind-ai-reader:testIamPermissions x-goog-quota-user=projects/playmind-ai-reader
+[2025-12-22T09:36:57.461Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/playmind-ai-reader:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[2025-12-22T09:36:58.434Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/playmind-ai-reader:testIamPermissions 200
+[2025-12-22T09:36:58.434Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/playmind-ai-reader:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[2025-12-22T09:36:58.435Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:36:58.435Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:36:58.435Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/playmind-ai-reader/serviceAccounts/playmind-ai-reader@appspot.gserviceaccount.com:testIamPermissions [none]
+[2025-12-22T09:36:58.435Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/playmind-ai-reader/serviceAccounts/playmind-ai-reader@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[2025-12-22T09:36:58.785Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/playmind-ai-reader/serviceAccounts/playmind-ai-reader@appspot.gserviceaccount.com:testIamPermissions 200
+[2025-12-22T09:36:58.785Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/playmind-ai-reader/serviceAccounts/playmind-ai-reader@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+
+=== Deploying to 'playmind-ai-reader'...
+
+i  deploying functions 
+[2025-12-22T09:36:58.787Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:36:58.787Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:36:58.788Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/playmind-ai-reader [none]
+[2025-12-22T09:36:59.035Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/playmind-ai-reader 200
+[2025-12-22T09:36:59.035Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/playmind-ai-reader {"projectNumber":"590177001373","projectId":"playmind-ai-reader","lifecycleState":"ACTIVE","name":"playmind-ai-reader","labels":{"firebase":"enabled","firebase-core":"disabled","generative-language":"enabled"},"createTime":"2025-08-22T02:29:25.339065Z"}
+i  functions: preparing codebase default for deployment 
+i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[2025-12-22T09:36:59.037Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:36:59.037Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:36:59.038Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/playmind-ai-reader/adminSdkConfig [none]
+[2025-12-22T09:36:59.735Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/playmind-ai-reader/adminSdkConfig 200
+[2025-12-22T09:36:59.735Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/playmind-ai-reader/adminSdkConfig {"projectId":"playmind-ai-reader","storageBucket":"playmind-ai-reader.firebasestorage.app"}
+[2025-12-22T09:36:59.736Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:36:59.736Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:36:59.737Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/playmind-ai-reader/configs [none]
+[2025-12-22T09:37:00.057Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/playmind-ai-reader/configs 200
+[2025-12-22T09:37:00.057Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/playmind-ai-reader/configs {"configs":[{"name":"projects/playmind-ai-reader/configs/gemini"},{"name":"projects/playmind-ai-reader/configs/billing"},{"name":"projects/playmind-ai-reader/configs/gcs"}]}
+[2025-12-22T09:37:00.057Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:37:00.058Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:37:00.058Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:37:00.058Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:37:00.058Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:37:00.058Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:37:00.058Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/playmind-ai-reader/configs/gemini/variables [none]
+[2025-12-22T09:37:00.059Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/playmind-ai-reader/configs/billing/variables [none]
+[2025-12-22T09:37:00.060Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/playmind-ai-reader/configs/gcs/variables [none]
+[2025-12-22T09:37:00.303Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/playmind-ai-reader/configs/gemini/variables 200
+[2025-12-22T09:37:00.303Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/playmind-ai-reader/configs/gemini/variables {"variables":[{"name":"projects/playmind-ai-reader/configs/gemini/variables/key","updateTime":"2025-08-22T04:46:42.043115114Z"}]}
+[2025-12-22T09:37:00.303Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:37:00.303Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:37:00.304Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/playmind-ai-reader/configs/gemini/variables/key [none]
+[2025-12-22T09:37:00.388Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/playmind-ai-reader/configs/gcs/variables 200
+[2025-12-22T09:37:00.388Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/playmind-ai-reader/configs/gcs/variables {"variables":[{"name":"projects/playmind-ai-reader/configs/gcs/variables/bucket","updateTime":"2025-08-25T05:07:38.906960136Z"}]}
+[2025-12-22T09:37:00.388Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:37:00.388Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:37:00.388Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/playmind-ai-reader/configs/gcs/variables/bucket [none]
+[2025-12-22T09:37:00.589Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/playmind-ai-reader/configs/gemini/variables/key 200
+[2025-12-22T09:37:00.589Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/playmind-ai-reader/configs/gemini/variables/key {"name":"projects/playmind-ai-reader/configs/gemini/variables/key","updateTime":"2025-08-22T04:46:42.043115114Z","text":"AIzaSyDGKiu89ob0XiYOt9-j0fq64EDNbyM6aSw"}
+[2025-12-22T09:37:00.636Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/playmind-ai-reader/configs/gcs/variables/bucket 200
+[2025-12-22T09:37:00.637Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/playmind-ai-reader/configs/gcs/variables/bucket {"name":"projects/playmind-ai-reader/configs/gcs/variables/bucket","updateTime":"2025-08-25T05:07:38.906960136Z","text":"playmind-ai-reader.firebasestorage.app"}
+[2025-12-22T09:37:00.985Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/playmind-ai-reader/configs/billing/variables 200
+[2025-12-22T09:37:00.985Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/playmind-ai-reader/configs/billing/variables {"variables":[{"name":"projects/playmind-ai-reader/configs/billing/variables/project_id","updateTime":"2025-08-25T04:38:26.569508040Z"}]}
+[2025-12-22T09:37:00.985Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:37:00.985Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:37:00.985Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/playmind-ai-reader/configs/billing/variables/project_id [none]
+[2025-12-22T09:37:01.239Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/playmind-ai-reader/configs/billing/variables/project_id 200
+[2025-12-22T09:37:01.239Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/playmind-ai-reader/configs/billing/variables/project_id {"name":"projects/playmind-ai-reader/configs/billing/variables/project_id","updateTime":"2025-08-25T04:38:26.569508040Z","text":"playmind-ai-reader"}
+[2025-12-22T09:37:01.241Z] Validating nodejs source
+!  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+!  functions: Please note that there will be breaking changes when you upgrade. 
+[2025-12-22T09:37:02.565Z] > [functions] package.json contents: {
+  "name": "playmind-functions",
+  "version": "1.0.0",
+  "private": true,
+  "main": "lib/index.js",
+  "scripts": {
+    "lint": "eslint --ext .js,.ts .",
+    "build": "tsc",
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "dependencies": {
+    "@google-cloud/storage": "^7.0.0",
+    "@google-cloud/vision": "^4.0.0",
+    "@google/generative-ai": "^0.21.0",
+    "firebase-admin": "^12.0.0",
+    "firebase-functions": "^5.0.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "eslint": "^8.56.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-import": "^2.29.1",
+    "firebase-functions-test": "^3.1.0",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": "22"
+  }
+}
+[2025-12-22T09:37:02.566Z] Building nodejs source
+i  functions: Loading and analyzing source code for codebase default to determine what to deploy 
+[2025-12-22T09:37:02.567Z] Could not find functions.yaml. Must use http discovery
+[2025-12-22T09:37:02.574Z] Found firebase-functions binary at 'C:\Users\micha\OneDrive\?辣\GitHub\PlayMind-Expo\functions\node_modules\.bin\firebase-functions'
+Serving at port 8246
+
+[2025-12-22T09:37:03.803Z] Got response from /__/functions.yaml {"endpoints":{"generateUploadUrl":{"platform":"gcfv1","labels":{},"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"callableTrigger":{},"entryPoint":"generateUploadUrl"},"processPdf":{"platform":"gcfv1","labels":{},"availableMemoryMb":null,"timeoutSeconds":300,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"secretEnvironmentVariables":[{"key":"GEMINI_API_KEY"}],"callableTrigger":{},"entryPoint":"processPdf"},"getAiSummary":{"platform":"gcfv1","labels":{},"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"secretEnvironmentVariables":[{"key":"GEMINI_API_KEY"}],"callableTrigger":{},"entryPoint":"getAiSummary"},"getAiConcepts":{"platform":"gcfv1","labels":{},"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"secretEnvironmentVariables":[{"key":"GEMINI_API_KEY"}],"callableTrigger":{},"entryPoint":"getAiConcepts"}},"specVersion":"v1alpha1","requiredAPIs":[],"extensions":{}}
+i  extensions: ensuring required API firebaseextensions.googleapis.com is enabled... 
+[2025-12-22T09:37:07.850Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[2025-12-22T09:37:07.851Z] > authorizing via signed-in user (michael491549154915@gmail.com)
+[2025-12-22T09:37:07.851Z] [iam] checking project playmind-ai-reader for permissions ["firebase.projects.get","firebaseextensions.instances.list"]
+[2025-12-22T09:37:07.851Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:37:07.851Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:37:07.851Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/playmind-ai-reader:testIamPermissions [none]
+[2025-12-22T09:37:07.851Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/playmind-ai-reader:testIamPermissions x-goog-quota-user=projects/playmind-ai-reader
+[2025-12-22T09:37:07.851Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/playmind-ai-reader:testIamPermissions {"permissions":["firebase.projects.get","firebaseextensions.instances.list"]}
+[2025-12-22T09:37:09.997Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/playmind-ai-reader:testIamPermissions 200
+[2025-12-22T09:37:09.997Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/playmind-ai-reader:testIamPermissions {"permissions":["firebase.projects.get","firebaseextensions.instances.list"]}
+[2025-12-22T09:37:09.997Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:37:09.997Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:37:09.997Z] >>> [apiv2][query] GET https://firebaseextensions.googleapis.com/v1beta/projects/playmind-ai-reader/instances pageSize=100&pageToken=
+[2025-12-22T09:37:11.122Z] <<< [apiv2][status] GET https://firebaseextensions.googleapis.com/v1beta/projects/playmind-ai-reader/instances 200
+[2025-12-22T09:37:11.122Z] <<< [apiv2][body] GET https://firebaseextensions.googleapis.com/v1beta/projects/playmind-ai-reader/instances {}
+i  functions: preparing functions directory for uploading... 
+! DEPRECATION NOTICE: Action required before March 2026
+
+The functions.config() API and the Cloud Runtime Config service are deprecated. Deploys that rely on functions.config() will fail once Runtime Config shuts down in March 2026.
+
+The legacy functions:config:* CLI commands are deprecated and will be removed before March 2026.
+
+Learn how to migrate from functions.config() to the params package:
+
+https://firebase.google.com/docs/functions/config-env#migrate-config
+
+To convert existing functions.config() values to params, try the interactive migration command:
+
+  firebase functions:config:export
+
+i  functions: packaged C:\Users\micha\OneDrive\?辣\GitHub\PlayMind-Expo\functions (101.04 KB) for uploading 
+[2025-12-22T09:37:11.172Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:37:11.172Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:37:11.173Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v1/projects/playmind-ai-reader/locations/-/functions [none]
+[2025-12-22T09:37:12.036Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v1/projects/playmind-ai-reader/locations/-/functions 200
+[2025-12-22T09:37:12.036Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v1/projects/playmind-ai-reader/locations/-/functions {"functions":[{"name":"projects/playmind-ai-reader/locations/us-central1/functions/getAiConcepts","httpsTrigger":{"url":"https://us-central1-playmind-ai-reader.cloudfunctions.net/getAiConcepts","securityLevel":"SECURE_ALWAYS"},"status":"ACTIVE","entryPoint":"getAiConcepts","timeout":"60s","availableMemoryMb":256,"serviceAccountEmail":"playmind-ai-reader@appspot.gserviceaccount.com","updateTime":"2025-12-22T09:33:00.036Z","versionId":"16","labels":{"deployment-tool":"cli-firebase","deployment-callable":"true","firebase-functions-hash":"333a8bff97bc0d3b44a0a68e7fc239c5cb7b7e77"},"sourceUploadUrl":"https://storage.googleapis.com/uploads-683082005119.us-central1.cloudfunctions.appspot.com/26a86f26-696c-49f3-bab2-0e65e1c09a92.zip","environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"playmind-ai-reader\",\"storageBucket\":\"playmind-ai-reader.firebasestorage.app\"}","GCLOUD_PROJECT":"playmind-ai-reader","EVENTARC_CLOUD_EVENT_SOURCE":"projects/playmind-ai-reader/locations/us-central1/functions/getAiConcepts"},"runtime":"nodejs22","ingressSettings":"ALLOW_ALL","buildId":"98e37ff8-350b-4004-8564-aaf060ab5a9f","buildEnvironmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"secretEnvironmentVariables":[{"key":"GEMINI_API_KEY","projectId":"590177001373","secret":"GEMINI_API_KEY","version":"2"}],"buildName":"projects/590177001373/locations/us-central1/builds/98e37ff8-350b-4004-8564-aaf060ab5a9f","dockerRegistry":"ARTIFACT_REGISTRY","automaticUpdatePolicy":{},"buildServiceAccount":"projects/playmind-ai-reader/serviceAccounts/590177001373-compute@developer.gserviceaccount.com","satisfiesPzi":true},{"name":"projects/playmind-ai-reader/locations/us-central1/functions/processPdf","httpsTrigger":{"url":"https://us-central1-playmind-ai-reader.cloudfunctions.net/processPdf","securityLevel":"SECURE_ALWAYS"},"status":"ACTIVE","entryPoint":"processPdf","timeout":"300s","availableMemoryMb":256,"serviceAccountEmail":"playmind-ai-reader@appspot.gserviceaccount.com","updateTime":"2025-12-22T09:32:59.851Z","versionId":"15","labels":{"deployment-tool":"cli-firebase","deployment-callable":"true","firebase-functions-hash":"333a8bff97bc0d3b44a0a68e7fc239c5cb7b7e77"},"sourceUploadUrl":"https://storage.googleapis.com/uploads-683082005119.us-central1.cloudfunctions.appspot.com/26a86f26-696c-49f3-bab2-0e65e1c09a92.zip","environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"playmind-ai-reader\",\"storageBucket\":\"playmind-ai-reader.firebasestorage.app\"}","GCLOUD_PROJECT":"playmind-ai-reader","EVENTARC_CLOUD_EVENT_SOURCE":"projects/playmind-ai-reader/locations/us-central1/functions/processPdf"},"runtime":"nodejs22","ingressSettings":"ALLOW_ALL","buildId":"98e37ff8-350b-4004-8564-aaf060ab5a9f","buildEnvironmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"secretEnvironmentVariables":[{"key":"GEMINI_API_KEY","projectId":"590177001373","secret":"GEMINI_API_KEY","version":"2"}],"buildName":"projects/590177001373/locations/us-central1/builds/98e37ff8-350b-4004-8564-aaf060ab5a9f","dockerRegistry":"ARTIFACT_REGISTRY","automaticUpdatePolicy":{},"buildServiceAccount":"projects/playmind-ai-reader/serviceAccounts/590177001373-compute@developer.gserviceaccount.com","satisfiesPzi":true},{"name":"projects/playmind-ai-reader/locations/us-central1/functions/generateUploadUrl","httpsTrigger":{"url":"https://us-central1-playmind-ai-reader.cloudfunctions.net/generateUploadUrl","securityLevel":"SECURE_ALWAYS"},"status":"ACTIVE","entryPoint":"generateUploadUrl","timeout":"60s","availableMemoryMb":256,"serviceAccountEmail":"playmind-ai-reader@appspot.gserviceaccount.com","updateTime":"2025-12-22T09:32:54.241Z","versionId":"16","labels":{"deployment-callable":"true","firebase-functions-hash":"f24e216143b29405e90db0fd152a21de2216e2f6","deployment-tool":"cli-firebase"},"sourceUploadUrl":"https://storage.googleapis.com/uploads-683082005119.us-central1.cloudfunctions.appspot.com/26a86f26-696c-49f3-bab2-0e65e1c09a92.zip","environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"playmind-ai-reader\",\"storageBucket\":\"playmind-ai-reader.firebasestorage.app\"}","GCLOUD_PROJECT":"playmind-ai-reader","EVENTARC_CLOUD_EVENT_SOURCE":"projects/playmind-ai-reader/locations/us-central1/functions/generateUploadUrl"},"runtime":"nodejs22","ingressSettings":"ALLOW_ALL","buildId":"98e37ff8-350b-4004-8564-aaf060ab5a9f","buildEnvironmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"buildName":"projects/590177001373/locations/us-central1/builds/98e37ff8-350b-4004-8564-aaf060ab5a9f","dockerRegistry":"ARTIFACT_REGISTRY","automaticUpdatePolicy":{},"buildServiceAccount":"projects/playmind-ai-reader/serviceAccounts/590177001373-compute@developer.gserviceaccount.com","satisfiesPzi":true},{"name":"projects/playmind-ai-reader/locations/us-central1/functions/getAiSummary","httpsTrigger":{"url":"https://us-central1-playmind-ai-reader.cloudfunctions.net/getAiSummary","securityLevel":"SECURE_ALWAYS"},"status":"ACTIVE","entryPoint":"getAiSummary","timeout":"60s","availableMemoryMb":256,"serviceAccountEmail":"playmind-ai-reader@appspot.gserviceaccount.com","updateTime":"2025-12-22T09:33:02.795Z","versionId":"16","labels":{"deployment-tool":"cli-firebase","deployment-callable":"true","firebase-functions-hash":"333a8bff97bc0d3b44a0a68e7fc239c5cb7b7e77"},"sourceUploadUrl":"https://storage.googleapis.com/uploads-683082005119.us-central1.cloudfunctions.appspot.com/26a86f26-696c-49f3-bab2-0e65e1c09a92.zip","environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"playmind-ai-reader\",\"storageBucket\":\"playmind-ai-reader.firebasestorage.app\"}","GCLOUD_PROJECT":"playmind-ai-reader","EVENTARC_CLOUD_EVENT_SOURCE":"projects/playmind-ai-reader/locations/us-central1/functions/getAiSummary"},"runtime":"nodejs22","ingressSettings":"ALLOW_ALL","buildId":"98e37ff8-350b-4004-8564-aaf060ab5a9f","buildEnvironmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"secretEnvironmentVariables":[{"key":"GEMINI_API_KEY","projectId":"590177001373","secret":"GEMINI_API_KEY","version":"2"}],"buildName":"projects/590177001373/locations/us-central1/builds/98e37ff8-350b-4004-8564-aaf060ab5a9f","dockerRegistry":"ARTIFACT_REGISTRY","automaticUpdatePolicy":{},"buildServiceAccount":"projects/playmind-ai-reader/serviceAccounts/590177001373-compute@developer.gserviceaccount.com","satisfiesPzi":true}]}
+[2025-12-22T09:37:12.037Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:37:12.037Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:37:12.037Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/playmind-ai-reader/locations/-/functions filter=environment%3D%22GEN_2%22
+[2025-12-22T09:37:13.335Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/playmind-ai-reader/locations/-/functions 200
+[2025-12-22T09:37:13.336Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/playmind-ai-reader/locations/-/functions {}
+i  functions: ensuring required API secretmanager.googleapis.com is enabled... 
+[2025-12-22T09:37:13.339Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:37:13.339Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:37:13.339Z] >>> [apiv2][query] GET https://secretmanager.googleapis.com/v1/projects/playmind-ai-reader/secrets/GEMINI_API_KEY/versions/latest [none]
+[2025-12-22T09:37:13.701Z] <<< [apiv2][status] GET https://secretmanager.googleapis.com/v1/projects/playmind-ai-reader/secrets/GEMINI_API_KEY/versions/latest 200
+[2025-12-22T09:37:13.701Z] <<< [apiv2][body] GET https://secretmanager.googleapis.com/v1/projects/playmind-ai-reader/secrets/GEMINI_API_KEY/versions/latest {"name":"projects/590177001373/secrets/GEMINI_API_KEY/versions/2","createTime":"2025-12-22T05:02:55.548528Z","state":"ENABLED","replicationStatus":{"automatic":{}},"etag":"\"164683570f5c70\""}
+[2025-12-22T09:37:13.701Z] Resolved secret version of GEMINI_API_KEY to 2.
+[2025-12-22T09:37:13.702Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:37:13.702Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:37:13.702Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/playmind-ai-reader [none]
+[2025-12-22T09:37:13.950Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/playmind-ai-reader 200
+[2025-12-22T09:37:13.950Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/playmind-ai-reader {"projectNumber":"590177001373","projectId":"playmind-ai-reader","lifecycleState":"ACTIVE","name":"playmind-ai-reader","labels":{"firebase":"enabled","firebase-core":"disabled","generative-language":"enabled"},"createTime":"2025-08-22T02:29:25.339065Z"}
+[2025-12-22T09:37:13.951Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:37:13.951Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:37:13.951Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/playmind-ai-reader/billingInfo [none]
+[2025-12-22T09:37:15.157Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/playmind-ai-reader/billingInfo 200
+[2025-12-22T09:37:15.157Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/playmind-ai-reader/billingInfo {"name":"projects/playmind-ai-reader/billingInfo","projectId":"playmind-ai-reader","billingAccountName":"billingAccounts/016CFB-7B88D0-707C9C","billingEnabled":true}
+[2025-12-22T09:37:15.158Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:37:15.158Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:37:15.158Z] >>> [apiv2][query] POST https://cloudfunctions.googleapis.com/v1/projects/playmind-ai-reader/locations/us-central1/functions:generateUploadUrl [none]
+[2025-12-22T09:37:15.158Z] >>> [apiv2][body] POST https://cloudfunctions.googleapis.com/v1/projects/playmind-ai-reader/locations/us-central1/functions:generateUploadUrl {}
+[2025-12-22T09:37:16.071Z] <<< [apiv2][status] POST https://cloudfunctions.googleapis.com/v1/projects/playmind-ai-reader/locations/us-central1/functions:generateUploadUrl 200
+[2025-12-22T09:37:16.071Z] <<< [apiv2][body] POST https://cloudfunctions.googleapis.com/v1/projects/playmind-ai-reader/locations/us-central1/functions:generateUploadUrl {"uploadUrl":"https://storage.googleapis.com/uploads-683082005119.us-central1.cloudfunctions.appspot.com/8967fee9-5b9f-450e-9ba7-c7d08ce76297.zip?GoogleAccessId=service-590177001373@gcf-admin-robot.iam.gserviceaccount.com&Expires=1766398035&Signature=Py6R7emXzPstrovhF7qAUldAfFdzLv%2FZCmltGuVKYAx9HjUoo6c83qcmRgnbEfI1As1Ck07rm%2Bmyu9Q8SznGslpFcOUjLHHSyCdKFfq2Gmmr5OmDIbq1%2BJuQtAa8K9EjWN11bqjGqjKZQVik%2FvKl7jBScpDqwNqPWokhrhuhhNsV0tt6FwKks%2FIhQhY0nDXIIuTMIJtJtej%2FDWPH7tc4YMdGkJsjeeuqRxqVtB0Lm0MtJc9h6tLadfnZCRqmnm0VSXtdQVj3tIj%2BREsA3wKLkGi6B%2BiwGTxpFucCc2h6%2F%2F%2BIW29d7gh7qLTda8ioVDTQbPwRbnGSCEp7sByxU7aqVQ%3D%3D"}
+[2025-12-22T09:37:16.072Z] >>> [apiv2][query] PUT https://storage.googleapis.com/uploads-683082005119.us-central1.cloudfunctions.appspot.com/8967fee9-5b9f-450e-9ba7-c7d08ce76297.zip GoogleAccessId=service-590177001373%40gcf-admin-robot.iam.gserviceaccount.com&Expires=1766398035&Signature=Py6R7emXzPstrovhF7qAUldAfFdzLv%2FZCmltGuVKYAx9HjUoo6c83qcmRgnbEfI1As1Ck07rm%2Bmyu9Q8SznGslpFcOUjLHHSyCdKFfq2Gmmr5OmDIbq1%2BJuQtAa8K9EjWN11bqjGqjKZQVik%2FvKl7jBScpDqwNqPWokhrhuhhNsV0tt6FwKks%2FIhQhY0nDXIIuTMIJtJtej%2FDWPH7tc4YMdGkJsjeeuqRxqVtB0Lm0MtJc9h6tLadfnZCRqmnm0VSXtdQVj3tIj%2BREsA3wKLkGi6B%2BiwGTxpFucCc2h6%2F%2F%2BIW29d7gh7qLTda8ioVDTQbPwRbnGSCEp7sByxU7aqVQ%3D%3D
+[2025-12-22T09:37:16.072Z] >>> [apiv2][body] PUT https://storage.googleapis.com/uploads-683082005119.us-central1.cloudfunctions.appspot.com/8967fee9-5b9f-450e-9ba7-c7d08ce76297.zip [stream]
+[2025-12-22T09:37:17.898Z] <<< [apiv2][status] PUT https://storage.googleapis.com/uploads-683082005119.us-central1.cloudfunctions.appspot.com/8967fee9-5b9f-450e-9ba7-c7d08ce76297.zip 200
+[2025-12-22T09:37:17.898Z] <<< [apiv2][body] PUT https://storage.googleapis.com/uploads-683082005119.us-central1.cloudfunctions.appspot.com/8967fee9-5b9f-450e-9ba7-c7d08ce76297.zip [omitted]
++  functions: functions source uploaded successfully 
+i  functions: updating Node.js 22 (1st Gen) function generateUploadUrl(us-central1)... 
+i  functions: updating Node.js 22 (1st Gen) function processPdf(us-central1)... 
+i  functions: updating Node.js 22 (1st Gen) function getAiSummary(us-central1)... 
+i  functions: updating Node.js 22 (1st Gen) function getAiConcepts(us-central1)... 
+[2025-12-22T09:37:17.903Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:37:17.903Z] Checked if tokens are valid: true, expires at: 1766398168462
+[2025-12-22T09:37:17.903Z] >>> [apiv2][query] PATCH https://cloudfunctions.googleapis.com/v1/projects/playmind-ai-reader/locations/us-central1/functions/generateUploadUrl updateMask=name%2CsourceUploadUrl%2CentryPoint%2Cruntime%2CdockerRegistry%2Clabels%2ChttpsTrigger.securityLevel%2CminInstances%2CmaxInstances%2CingressSettings%2CenvironmentVariables%2CserviceAccountEmail%2CavailableMemoryMb%2Ctimeout%2CvpcConnector%2CvpcConnectorEgressSettings%2CsourceToken%2CbuildEnvironmentVariables
+[2025-12-22T09:37:17.903Z] >>> [apiv2][body] PATCH https://cloudfunctions.googleapis.com/v1/projects/playmind-ai-reader/locations/us-central1/functions/generateUploadUrl {"name":"projects/playmind-ai-reader/locations/us-central1/functions/generateUploadUrl","sourceUploadUrl":"https://storage.googleapis.com/uploads-683082005119.us-central1.cloudfunctions.appspot.com/8967fee9-5b9f-450e-9ba7-c7d08ce76297.zip?GoogleAccessId=service-590177001373@gcf-admin-robot.iam.gserviceaccount.com&Expires=1766398035&Signature=Py6R7emXzPstrovhF7qAUldAfFdzLv%2FZCmltGuVKYAx9HjUoo6c83qcmRgnbEfI1As1Ck07rm%2Bmyu9Q8SznGslpFcOUjLHHSyCdKFfq2Gmmr5OmDIbq1%2BJuQtAa8K9EjWN11bqjGqjKZQVik%2FvKl7jBScpDqwNqPWokhrhuhhNsV0tt6FwKks%2FIhQhY0nDXIIuTMIJtJtej%2FDWPH7tc4YMdGkJsjeeuqRxqVtB0Lm0MtJc9h6tLadfnZCRqmnm0VSXtdQVj3tIj%2BREsA3wKLkGi6B%2BiwGTxpFucCc2h6%2F%2F%2BIW29d7gh7qLTda8ioVDTQbPwRbnGSCEp7sByxU7aqVQ%3D%3D","entryPoint":"generateUploadUrl","runtime":"nodejs22","dockerRegistry":"ARTIFACT_REGISTRY","labels":{"deployment-tool":"cli-firebase","deployment-callable":"true","firebase-functions-hash":"369f8597656594b4486131e3287fe2dbfa51ae9d"},"httpsTrigger":{"securityLevel":"SECURE_ALWAYS"},"minInstances":null,"maxInstances":null,"ingressSettings":null,"environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"playmind-ai-reader\",\"storageBucket\":\"playmind-ai-reader.firebasestorage.app\"}","GCLOUD_PROJECT":"playmind-ai-reader","EVENTARC_CLOUD_EVENT_SOURCE":"projects/playmind-ai-reader/locations/us-central1/functions/generateUploadUrl"},"serviceAccountEmail":null,"availableMemoryMb":null,"timeout":null,"vpcConnector":null,"vpcConnectorEgressSettings":null,"buildEnvironmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""}}
+[2025-12-22T09:37:18.647Z] <<< [apiv2][status] PATCH https://cloudfunctions.googleapis.com/v1/projects/playmind-ai-reader/locations/us-central1/functions/generateUploadUrl 400
+[2025-12-22T09:37:18.648Z] <<< [apiv2][body] PATCH https://cloudfunctions.googleapis.com/v1/projects/playmind-ai-reader/locations/us-central1/functions/generateUploadUrl {"error":{"code":400,"message":"An operation on function generateUploadUrl in region us-central1 in project playmind-ai-reader is already in progress. Please try again later.","status":"FAILED_PRECONDITION"}}
+!  functions: failed to update function projects/playmind-ai-reader/locations/us-central1/functions/generateUploadUrl 
+Failed to update function projects/playmind-ai-reader/locations/us-central1/functions/generateUploadUrl

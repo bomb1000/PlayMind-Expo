@@ -20,6 +20,7 @@ const MAPPING = {
   'chevron.right': 'chevron-right',
   'books.vertical.fill': 'library-books',
   'book.fill': 'menu-book',
+  'gearshape.fill': 'settings',
 };
 
 /**

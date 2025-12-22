@@ -37,16 +37,11 @@ const MOCK_CONCEPTS = [
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export const mockApiService = {
-  getUploadUrl: async (fileName: string, contentType: string): Promise<string> => {
-    console.log(`[MOCK] Getting upload URL for ${fileName}`);
-    await sleep(300);
-    return `https://mock-storage.com/upload-url-for/${fileName}`;
-  },
-
-  uploadFile: async (uploadUrl: string, fileUri: string, contentType: string) => {
-    console.log(`[MOCK] "Uploading" file from ${fileUri} to ${uploadUrl}`);
+  uploadFile: async (fileName: string, fileUri: string, contentType: string, userId: string = 'user-id-placeholder') => {
+    console.log(`[MOCK] "Uploading" file ${fileName} from ${fileUri}`);
     await sleep(1500); // Simulate upload time
     console.log('[MOCK] Upload complete.');
+    return `uploads/mock-user/${fileName}`;
   },
 
   startPdfProcessing: async (gcsPath: string): Promise<void> => {
@@ -55,13 +50,13 @@ export const mockApiService = {
   },
 
   getProcessedText: async (book: Book): Promise<string | null> => {
-    console.log(`[MOCK] Checking for processed text for book: ${book.title}`);
+    console.log(`[MOCK] Checking for processed text for book: ${book.fileName}`);
     // Simulate a "not ready yet" state for the first couple of tries
     const isReady = Math.random() > 0.3; // 70% chance of being ready
     if (!isReady) {
-        console.log('[MOCK] OCR text not ready yet.');
-        await sleep(1000);
-        return null;
+      console.log('[MOCK] OCR text not ready yet.');
+      await sleep(1000);
+      return null;
     }
 
     console.log('[MOCK] OCR text is ready. Returning mock content.');

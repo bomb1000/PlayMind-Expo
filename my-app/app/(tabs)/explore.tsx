@@ -8,7 +8,7 @@ import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Book } from '@/models/types';
-import { mockApiService } from '@/services/mockApiService';
+import { apiProvider } from '@/services/apiProvider';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { Colors } from '@/constants/Colors';
 
@@ -46,7 +46,8 @@ export default function EbookReaderScreen() {
     if (!book?.processedText || isSummarizing || isExtracting) return;
     setIsSummarizing(true);
     try {
-      const summary = await mockApiService.getSummary(book.processedText);
+      const service = await apiProvider.getService();
+      const summary = await service.getSummary(book.processedText);
       Alert.alert('AI Summary', summary);
     } catch (error) {
       Alert.alert('Error', (error as Error).message);
@@ -59,7 +60,8 @@ export default function EbookReaderScreen() {
     if (!book?.processedText || isSummarizing || isExtracting) return;
     setIsExtracting(true);
     try {
-      const concepts = await mockApiService.getConcepts(book.processedText);
+      const service = await apiProvider.getService();
+      const concepts = await service.getConcepts(book.processedText);
       const formattedConcepts = concepts.map(c => `• ${c.concept}: ${c.explanation}`).join('\n\n');
       Alert.alert('Key Concepts', formattedConcepts);
     } catch (error) {
